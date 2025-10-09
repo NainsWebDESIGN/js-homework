@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  font-family: "FiraCodeVF";
+}
+
+body {
+  padding: 2rem;
+  background-color: #444;
+}
+
+hr {
+  position: relative;
+  left: 2%;
+  width: 96%;
+  margin: 13px 0;
+}
+
+h3,
+p {
+  color: #eee;
+}
+
+p {
+  margin-bottom: 3px;
+  letter-spacing: 2px;
+}

@@ -1,7 +1,7 @@
 ajaxModel
   .ajax()
   .then((model) => {
-    const flatArr = Object.values(model.data).map((item) =>
+    const flatArr = Object.values(model).map((item) =>
       item.flat(Infinity)
     );
     console.log(flatArr);
@@ -12,8 +12,8 @@ ajaxModel
     const redMay = "夏紅梅";
     const findIndexArr = newArr.findIndex((item) => item.name == redMay);
     const indexOfArr = newArr.map((item) => item.name).indexOf(redMay);
-    model.log(findIndexArr, "s");
-    model.log(indexOfArr, "s");
+    log(findIndexArr);
+    log(indexOfArr);
 
     const repeatArr = newArr.filter(
       (a, b, c) => c.map((item) => item.id).indexOf(a.id) === b
@@ -52,17 +52,18 @@ ajaxModel
 
     const liouSu = "流蘇";
     if (Odds.map((item) => item.name).includes(liouSu)) {
-      model.log("Odds", "w");
+      log("Odds");
     }
     if (Evens.map((item) => item.name).includes(liouSu)) {
-      model.log("Evens", "w");
+      log("Evens");
     }
 
     const nameString = sortArr.map((item) => item.name).join(",");
-    model.log(nameString);
+    log(nameString);
 
     for (const item of sortArr) {
       console.log(item);
     }
   })
-  .catch((err) => ajaxModel.log(err, "e"));
+  .catch((err) => log(err, "w"))
+  .finally(() => log("Home Work Completed!", "s"));

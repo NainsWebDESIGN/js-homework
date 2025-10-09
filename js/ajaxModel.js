@@ -1,5 +1,4 @@
-class AjaxModel {
-  type = {
+const type = {
     l: {
       key: "log",
       background: "#57a3f3",
@@ -21,6 +20,18 @@ class AjaxModel {
       color: "#000",
     },
   };
+function log(t, a = "l") {
+    console.log(
+      `%c ${t} `,
+      `background: ${type[a].background}; padding: 1px; border-radius: 3px; color: ${type[a].color};`
+      // `%c ${(!type[a].key) ? a : type[a].key} %c ${t} %c`,
+      // "background: #35495E; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
+      // `background: ${type[a].background}; padding: 1px;border-radius: 0 3px 3px 0; color: ${type[a].color}`,
+      // "background: transparant"
+    );
+  }
+class AjaxModel {
+  basehref = url => `./json/${url}.json`;
 
   data = {};
 
@@ -30,13 +41,21 @@ class AjaxModel {
 
   async ajax() {
     try {
-      await fetch("../json/homeWork1.json")
+      await fetch(this.basehref("homeWork1"))
         .then((res) => res.json())
         .then((res) => (this.data["arr1"] = res));
-      await fetch("../json/homeWork2.json")
+      await fetch(this.basehref("homeWork2"))
         .then((res) => res.json())
         .then((res) => (this.data["arr2"] = res));
-      return this;
+
+      return new Promise((res, rej) => {
+        if(!this.data || this.data.length == 0){
+          rej(new Error("data is null"));
+        }else{
+          res(this.data);
+        }
+      });
+
     } catch (e) {
       throw new Error(e.message);
     }
@@ -44,24 +63,20 @@ class AjaxModel {
 
   async getTopic() {
     try {
-      await fetch("../json/topic.json")
+      await fetch(this.basehref("topic"))
         .then((res) => res.json())
-        .then((res) => (this.topic = res));
+        .then((res) => this.topic = res);
 
-      return this;
+      return new Promise((res, rej) => {
+        if(!this.topic || this.topic.length == 0){
+          rej(new Error("topic is null"));
+        }else{
+          res(this.topic);
+        }
+      });
     } catch (e) {
       throw new Error(e.message);
     }
   }
 
-  log(t, a = "l") {
-    console.log(
-      `%c ${t} `,
-      `background: ${this.type[a].background}; padding: 1px; border-radius: 3px; color: ${this.type[a].color};`
-      // `%c ${(!this.type[a].key) ? a : this.type[a].key} %c ${t} %c`,
-      // "background: #35495E; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
-      // `background: ${this.type[a].background}; padding: 1px;border-radius: 0 3px 3px 0; color: ${this.type[a].color}`,
-      // "background: transparant"
-    );
-  }
 }

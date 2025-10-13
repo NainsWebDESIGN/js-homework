@@ -3,16 +3,10 @@
 // 设置响应头以支持 JSON
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-// header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Methods: POST");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, X-Requested-with, Origin, Authorization");
 header('Access-Control-Expose-Headers:X-My-Custom-Header');
-
-// 處理 OPTIONS 請求
-// if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-//     exit;
-// }
 
 // 获取 AJAX 请求的输入数据
 $request = json_decode(file_get_contents("php://input"), true);
@@ -20,6 +14,8 @@ $request = json_decode(file_get_contents("php://input"), true);
 // 处理数据并返回响应
 if ($request['message'] === "topic") {
     echo json_encode(array('errMsg' => '', 'status' => true, 'data' => array(
+        "請將物件名稱(key)打印出來",
+        "請將物件值(value)打印出來",
         "請將物件內的每個陣列扁平化(把多維陣列改為一維陣列)", 
         "請將兩個陣列合併", 
         "請分別用 indexOf、findIndex 找出夏紅梅在陣列的第幾個位置", 

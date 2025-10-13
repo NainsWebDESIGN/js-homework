@@ -11,7 +11,9 @@ header('Access-Control-Expose-Headers:X-My-Custom-Header');
 // 获取 AJAX 请求的输入数据
 $request = json_decode(file_get_contents("php://input"), true);
 
-$dataBase = array(
+// 处理数据并返回响应
+if ($request['message'] === "topic") {
+    echo json_encode(array('errMsg' => '', 'status' => true, 'data' => array(
     "請將物件內的每個陣列扁平化(把多維陣列改為一維陣列)", 
     "請將兩個陣列合併", 
     "請分別用 indexOf、findIndex 找出夏紅梅在陣列的第幾個位置", 
@@ -22,11 +24,7 @@ $dataBase = array(
     "請用 includes 找出有流蘇的陣列", 
     "請將名字用逗號合成一段字串", 
     "請用 array.keys 的方式將陣列內的值都打印一次"
-);
-
-// 处理数据并返回响应
-if ($request['message'] === "topic") {
-    echo json_encode(array('errMsg' => '', 'status' => true, 'data' => $dataBase));
+)));
 } else {
     echo json_encode(array('errMsg' => 'Invalid message', 'status' => false, 'data' => array()));
 }

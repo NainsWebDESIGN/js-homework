@@ -1,7 +1,5 @@
-ajaxModel
-  .ajax()
-  .then((model) => {
-    const flatArr = Object.values(model).map((item) =>
+function homeWorkFormat(data){
+    const flatArr = Object.values(data).map((item) =>
       item.flat(Infinity)
     );
     console.log(flatArr);
@@ -64,6 +62,22 @@ ajaxModel
     for (const item of sortArr) {
       console.log(item);
     }
-  })
+  
+}
+const homeWorkModel = new HomeWorkModel();
+
+// homeWorkModel
+//   .ajax(1)
+//   .then((model) => model.ajax(2))
+//   .then((model) => model.getData())
+//   .then(homeWorkFormat)
+//   .catch((err) => log(err, "w"))
+//   .finally(() => log("Home Work Completed!", "s"));
+
+homeWorkModel
+  .backEnd(1)
+  .then((model) => model.backEnd(2))
+  .then((model) => model.getData())
+  .then(homeWorkFormat)
   .catch((err) => log(err, "w"))
   .finally(() => log("Home Work Completed!", "s"));

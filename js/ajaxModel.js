@@ -30,24 +30,20 @@ function log(t, a = "l") {
       // "background: transparant"
     );
   }
-class AjaxModel {
-  basehref = url => `./json/${url}.json`;
+function basehref(url){
+  return `./json/${url}.json`;
+}
+
+function backhref(url){
+  return `./php/${url}.php`;
+}
+
+class HomeWorkModel {
 
   data = {};
 
-  topic = [];
-
-  constructor() {}
-
-  async ajax() {
-    try {
-      await fetch(this.basehref("homeWork1"))
-        .then((res) => res.json())
-        .then((res) => (this.data["arr1"] = res));
-      await fetch(this.basehref("homeWork2"))
-        .then((res) => res.json())
-        .then((res) => (this.data["arr2"] = res));
-
+  getData(){
+    try{
       return new Promise((res, rej) => {
         if(!this.data || this.data.length == 0){
           rej(new Error("data is null"));
@@ -55,15 +51,46 @@ class AjaxModel {
           res(this.data);
         }
       });
+    }catch(e){
+      throw new Error(e.message);
+    }
+  }
+
+  async ajax(param) {
+    try {
+      await fetch(basehref(`homeWork${param}`))
+        .then((res) => res.json())
+        .then((res) => (this.data[`arr${param}`] = res));
+
+      return this;
 
     } catch (e) {
       throw new Error(e.message);
     }
   }
 
+  async backEnd(param){
+    try {
+      await fetch(`${backhref("getDataBase")}?getWay=data${param}`)
+        .then((res) => res.json())
+        .then((res) => (this.data[`arr${param}`] = res.data));
+
+      return this;
+
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
+
+}
+
+class TopicModel {
+
+  topic = [];
+
   async getTopic() {
     try {
-      await fetch(this.basehref("topic"))
+      await fetch(basehref("topic"))
         .then((res) => res.json())
         .then((res) => this.topic = res);
 
@@ -79,4 +106,24 @@ class AjaxModel {
     }
   }
 
+  async backTopic(getWay){
+    try {
+      await fetch(backhref("postDataBase"), {
+        method: 'POST',
+        body: JSON.stringify({ message: getWay })
+    })
+        .then((res) => res.json())
+        .then((res) => this.topic = res.data);
+
+      return new Promise((res, rej) => {
+        if(!this.topic || this.topic.length == 0){
+          rej(new Error("topic is null"));
+        }else{
+          res(this.topic);
+        }
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
 }

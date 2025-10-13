@@ -1,11 +1,24 @@
+/**
+ * 取得抓取 json 的路徑
+ * @param url (string) 檔案名稱
+ */
 function basehref(url){
   return `./json/${url}.json`;
 }
 
+/**
+ * 取得抓取 php 的路徑
+ * @param url (string) 檔案名稱
+ */
 function backhref(url){
   return `./php/${url}.php`;
 }
 
+/**
+ * 打印出有樣式的資料
+ * @param t (string) 要打印的文字(預設為正常打印)
+ * @param a (string) l = 正常，s = 成功，e = 錯誤，w = 警告
+ */
 function log(t, a = "l") {
   const type = {
     l: {
@@ -40,10 +53,17 @@ function log(t, a = "l") {
   );
 }
 
+
 class HomeWorkModel {
 
+  /**
+   * 存儲資料
+   */
   data = {};
 
+  /**
+   * 取得作業的倉庫資訊
+   */
   getData(){
     try{
       return new Promise((res, rej) => {
@@ -58,6 +78,10 @@ class HomeWorkModel {
     }
   }
 
+  /**
+   * 向 json 抓取資料
+   * @param param (number) 第幾個資料
+   */
   async ajax(param) {
     try {
       await fetch(basehref(`homeWork${param}`))
@@ -71,6 +95,10 @@ class HomeWorkModel {
     }
   }
 
+  /**
+   * 向 php 抓取資料
+   * @param param (number) 第幾個資料
+   */
   async backEnd(param){
     try {
       await fetch(`${backhref("getDataBase")}?getWay=data${param}`)
@@ -88,8 +116,14 @@ class HomeWorkModel {
 
 class TopicModel {
 
+  /**
+   * 存儲資料
+   */
   topic = [];
 
+  /**
+   * 向 json 抓取題目
+   */
   async getTopic() {
     try {
       await fetch(basehref("topic"))
@@ -108,6 +142,10 @@ class TopicModel {
     }
   }
 
+  /**
+   * 向 php 抓取題目
+   * @getWay (string) 題目識別
+   */
   async backTopic(getWay){
     try {
       await fetch(backhref("postDataBase"), {

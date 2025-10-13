@@ -150,13 +150,11 @@ class TopicModel {
   async backTopic(getWay){
     try {
       const url = backhref("postDataBase");
-      console.log(url);
       await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: getWay })
     })
-    .then(res => console.log(res))
         .then((res) => res.json())
         .then((res) => this.topic = res.data);
 

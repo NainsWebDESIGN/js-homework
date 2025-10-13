@@ -1,4 +1,13 @@
-const type = {
+function basehref(url){
+  return `./json/${url}.json`;
+}
+
+function backhref(url){
+  return `./php/${url}.php`;
+}
+
+function log(t, a = "l") {
+  const type = {
     l: {
       key: "log",
       background: "#57a3f3",
@@ -20,22 +29,15 @@ const type = {
       color: "#000",
     },
   };
-function log(t, a = "l") {
-    console.log(
-      `%c ${t} `,
-      `background: ${type[a].background}; padding: 1px; border-radius: 3px; color: ${type[a].color};`
-      // `%c ${(!type[a].key) ? a : type[a].key} %c ${t} %c`,
-      // "background: #35495E; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
-      // `background: ${type[a].background}; padding: 1px;border-radius: 0 3px 3px 0; color: ${type[a].color}`,
-      // "background: transparant"
-    );
-  }
-function basehref(url){
-  return `./json/${url}.json`;
-}
 
-function backhref(url){
-  return `./php/${url}.php`;
+  console.log(
+    `%c ${t} `,
+    `background: ${type[a].background}; padding: 1px; border-radius: 3px; color: ${type[a].color};`
+    // `%c ${(!type[a].key) ? a : type[a].key} %c ${t} %c`,
+    // "background: #35495E; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
+    // `background: ${type[a].background}; padding: 1px;border-radius: 0 3px 3px 0; color: ${type[a].color}`,
+    // "background: transparant"
+  );
 }
 
 class HomeWorkModel {

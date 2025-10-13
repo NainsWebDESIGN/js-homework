@@ -1,21 +1,22 @@
 function homeWorkFormat(data){
-  console.log(data);
+  // 請在這邊寫在答案
 }
-
 const homeWorkModel = new HomeWorkModel();
 
-// homeWorkModel
-//   .ajax(1)
-//   .then((model) => model.ajax(2))
-//   .then((model) => model.getData())
-//   .then(homeWorkFormat)
-//   .catch((err) => log(err, "w"))
-//   .finally(() => log("Home Work Completed!", "s"));
-
+// 向 json 抓作業資料
 homeWorkModel
-  .backEnd(1)
-  .then((model) => model.backEnd(2))
+  .ajax(1)
+  .then((model) => model.ajax(2))
   .then((model) => model.getData())
   .then(homeWorkFormat)
   .catch((err) => log(err, "w"))
   .finally(() => log("Home Work Completed!", "s"));
+
+// 向 php 抓作業資料
+// homeWorkModel
+//   .backEnd(1)
+//   .then((model) => model.backEnd(2))
+//   .then((model) => model.getData())
+//   .then(homeWorkFormat)
+//   .catch((err) => log(err, "w"))
+//   .finally(() => log("Home Work Completed!", "s"));

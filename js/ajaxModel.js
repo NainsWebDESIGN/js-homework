@@ -11,6 +11,7 @@ function basehref(url){
  * @param url (string) 檔案名稱
  */
 function backhref(url){
+  // return `https://nainsjs.zeabur.app/php/${url}.php`;
   return `./php/${url}.php`;
 }
 
@@ -148,8 +149,10 @@ class TopicModel {
    */
   async backTopic(getWay){
     try {
-      await fetch(backhref("postDataBase"), {
+      const url = backhref("postDataBase");
+      await fetch(url, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: getWay })
     })
         .then((res) => res.json())

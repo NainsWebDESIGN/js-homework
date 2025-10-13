@@ -3,9 +3,10 @@
 // 设置响应头以支持 JSON
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: https://nainsjs.zeabur.app');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Authorization');
+header('Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, X-Requested-with, Origin, Authorization');
 header('Access-Control-Expose-Headers:X-My-Custom-Header');
 
 if (isset($_GET['getWay'])) {

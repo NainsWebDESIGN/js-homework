@@ -1,5 +1,5 @@
 function homeWorkFormat(data){
-  // 請在這邊寫在答案
+  // 請將答案寫在這邊
 }
 const homeWorkModel = new HomeWorkModel();
 

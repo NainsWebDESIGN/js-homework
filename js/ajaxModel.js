@@ -153,6 +153,7 @@ class TopicModel {
         method: 'POST',
         body: JSON.stringify({ message: getWay })
     })
+    .then(res => console.log(res))
         .then((res) => res.json())
         .then((res) => this.topic = res.data);
 

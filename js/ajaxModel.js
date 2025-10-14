@@ -47,7 +47,20 @@ class HomeWorkModel {
     try {
       await fetch(`${backhref("getDataBase")}?getWay=data${param}`)
         .then((res) => res.json())
-        .then((res) => (this.data[`arr${param}`] = res.data));
+        .then((res) => res.status ? res.data : res.errMsg)
+        .then((data) => {
+          
+          switch (typeof data) {
+            case "string":
+              throw new Error(data);
+              break;
+          
+            default:
+              this.data[`arr${param}`] = data;
+              break;
+          }
+
+        });
 
       return this;
 
@@ -92,14 +105,26 @@ class TopicModel {
    */
   async backTopic(getWay){
     try {
-      const url = backhref("postDataBase");
-      await fetch(url, {
+      await fetch(backhref("postDataBase"), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: getWay })
     })
         .then((res) => res.json())
-        .then((res) => this.topic = res.data);
+        .then((res) => res.status ? res.data : res.errMsg)
+        .then((data) => {
+
+          switch (typeof data) {
+            case "string":
+              throw new Error(data);
+              break;
+          
+            default:
+              this.topic = data;
+              break;
+          }
+          
+        });
 
       return new Promise((res, rej) => {
         if(!this.topic || this.topic.length == 0){

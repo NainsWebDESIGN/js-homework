@@ -88,7 +88,7 @@ class TopicModel {
 
   /**
    * 向 php 抓取題目
-   * @getWay (string) 題目識別
+   * @param getWay (string) 題目識別
    */
   async backTopic(getWay){
     try {

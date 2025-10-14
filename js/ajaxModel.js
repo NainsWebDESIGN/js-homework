@@ -45,7 +45,6 @@ class HomeWorkModel {
    */
   async backEnd(param){
     try {
-      console.log(456);
       await fetch(`./php/system.php?getWay=data${param}`)
         .then((res) => res.json())
         .then((response) => {

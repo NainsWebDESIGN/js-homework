@@ -1,11 +1,11 @@
 function homeWorkFormat(data){
-    const obj$ = Object.keys(data);
-    console.log(obj$);
+    const key$ = Object.keys(data);
+    console.log(key$);
 
     const value$ = Object.values(data);
     console.log(value$);
   
-    const flatArr = Object.values(data).map((item) =>
+    const flatArr = value$.map((item) =>
       item.flat(Infinity)
     );
     console.log(flatArr);

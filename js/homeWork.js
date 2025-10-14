@@ -6,11 +6,11 @@ const homeWorkModel = new HomeWorkModel();
 
 function GEThomeWork(){
   switch(api){
-    case "json": // 向 json 抓作業資料
+    case API.JSON: // 向 json 抓作業資料
       return homeWorkModel
         .ajax(1)
         .then((model) => model.ajax(2));
-    case "php": // 向 php 抓作業資料
+    case API.PHP: // 向 php 抓作業資料
       return homeWorkModel
         .backEnd(1)
         .then((model) => model.backEnd(2));

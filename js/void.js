@@ -1,4 +1,14 @@
-const api = "php";
+const API = Object.freeze({
+    PHP: "PHP",
+    JSON: "JSON"
+});
+
+const api = API.JSON;
+
+const RESPONSE = Object.freeze({
+  SUC: true,
+  FEI: false
+})
 
 /**
  * 取得抓取 json 的路徑

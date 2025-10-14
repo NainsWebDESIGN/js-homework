@@ -1,23 +1,5 @@
 <?php
-
-// 设置响应头以支持 JSON
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: POST");
-header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, X-Requested-with, Origin, Authorization");
-header('Access-Control-Expose-Headers:X-My-Custom-Header');
-
-// 获取 AJAX 请求的输入数据
-$request = json_decode(file_get_contents("php://input"), true);
-
-// 处理数据并返回响应
-if ($request['message'] === "topic") {
-    echo json_encode(
-        array(
-            'errMsg' => '', 
-            'status' => true, 
-            'data' => array(
+    $data = array(
                 "請將物件名稱(key)打印出來",
                 "請將物件值(value)打印出來",
                 "請將物件內的每個陣列扁平化(把多維陣列改為一維陣列)", 
@@ -31,17 +13,4 @@ if ($request['message'] === "topic") {
                 "請將名字用逗號合成一段字串", 
                 "請用 array.keys 的方式將陣列內的值都打印一次"
             )
-        )
-    );
-    exit;
-} else {
-    echo json_encode(
-        array(
-            'errMsg' => 'Invalid message', 
-            'status' => false, 
-            'data' => array()
-        )
-    );
-    exit;
-}
 ?>

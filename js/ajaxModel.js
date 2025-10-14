@@ -45,10 +45,10 @@ class HomeWorkModel {
    */
   async backEnd(param){
     try {
-      await fetch(`${backhref("getDataBase")}?getWay=data${param}`)
+      console.log(456);
+      await fetch(`./php/system.php?getWay=data${param}`)
         .then((res) => res.json())
         .then((response) => {
-          
           switch (response.status) {
             case RESPONSE.SUC:
               this.data[`arr${param}`] = response.data;
@@ -108,7 +108,7 @@ class TopicModel {
    */
   async backTopic(getWay){
     try {
-      await fetch(backhref("postDataBase"), {
+      await fetch("./php/system.php", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: getWay })

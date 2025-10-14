@@ -1,74 +1,86 @@
 function homeWorkFormat(data){
-    const key$ = Object.keys(data);
-    console.log(key$);
+  // 第 1 題
+  const key$ = Object.keys(data);
+  console.log(1, key$);
 
-    const value$ = Object.values(data);
-    console.log(value$);
+  // 第 2 題
+  const value$ = Object.values(data);
+  console.log(2, value$);
   
-    const flatArr = value$.map((item) =>
-      item.flat(Infinity)
-    );
-    console.log(flatArr);
+  // 第 3 題
+  const flatArr = value$.map((item) =>
+    item.flat(Infinity)
+  );
+  console.log(3, flatArr);
 
-    const newArr = flatArr[0].concat(flatArr[1]);
-    console.log(newArr);
+  // 第 4 題
+  const newArr = flatArr[0].concat(flatArr[1]);
+  console.log(4, newArr);
 
-    const redMay = "夏紅梅";
-    const findIndexArr = newArr.findIndex((item) => item.name == redMay);
-    const indexOfArr = newArr.map((item) => item.name).indexOf(redMay);
-    log(findIndexArr);
-    log(indexOfArr);
+  // 第 5 題
+  const redMay = "夏紅梅";
+  const findIndexArr = newArr.findIndex((item) => item.name == redMay);
+  const indexOfArr = newArr.map((item) => item.name).indexOf(redMay);
+  log(`5 ${findIndexArr}`);
+  log(`5 ${indexOfArr}`);
 
-    const repeatArr = newArr.filter(
-      (a, b, c) => c.map((item) => item.id).indexOf(a.id) === b
-    );
-    const reduceArr = newArr.reduce(
-      (a, b) => (a.map((item) => item.id).includes(b.id) ? a : [...a, b]),
-      []
-    );
-    console.log(repeatArr);
-    console.log(reduceArr);
+  // 第 6 題
+  const repeatArr = newArr.filter(
+    (a, b, c) => c.map((item) => item.id).indexOf(a.id) === b
+  );
+  const reduceArr = newArr.reduce(
+    (a, b) => (a.map((item) => item.id).includes(b.id) ? a : [...a, b]),
+    []
+  );
+  console.log(6, repeatArr);
+  console.log(6, reduceArr);
 
-    const filterArr = repeatArr.filter((item) => item.age < 25);
-    console.log(filterArr);
+  // 第 7 題
+  const filterArr = repeatArr.filter((item) => item.age < 25);
+  console.log(7, filterArr);
 
-    const all = filterArr.map((item) => item.age).reduce((a, b) => a + b, 0);
-    const mapArr = filterArr.map((item) => ({
-      ...item,
-      ageGap: all - item.age,
-      allAge: all,
-    }));
-    console.log(mapArr);
+  // 第 8 題
+  const all = filterArr.map((item) => item.age).reduce((a, b) => a + b, 0);
+  const mapArr = filterArr.map((item) => ({
+    ...item,
+    ageGap: all - item.age,
+    allAge: all,
+  }));
+  console.log(8, mapArr);
 
-    const sortArr = mapArr.sort((a, b) => a.id - b.id);
-    console.log(sortArr);
+  // 第 9 題
+  const sortArr = mapArr.sort((a, b) => a.id - b.id);
+  console.log(9, sortArr);
 
-    const Odds = [];
-    const Evens = [];
-    sortArr.forEach((item) => {
-      if (Number(item.id) % 2 === 0) {
-        Evens.push(item);
-      } else {
-        Odds.push(item);
-      }
-    });
-    console.log(Odds, Evens);
-
-    const liouSu = "流蘇";
-    if (Odds.map((item) => item.name).includes(liouSu)) {
-      log("Odds");
+  // 第 10 題
+  const Odds = [];
+  const Evens = [];
+  sortArr.forEach((item) => {
+    if (Number(item.id) % 2 === 0) {
+      Evens.push(item);
+    } else {
+      Odds.push(item);
     }
-    if (Evens.map((item) => item.name).includes(liouSu)) {
-      log("Evens");
-    }
+  });
+  console.log(10, Odds, Evens);
 
-    const nameString = sortArr.map((item) => item.name).join(",");
-    log(nameString);
+  // 第 11 題
+  const liouSu = "流蘇";
+  if (Odds.map((item) => item.name).includes(liouSu)) {
+    log("11 Odds");
+  }
+  if (Evens.map((item) => item.name).includes(liouSu)) {
+    log("11 Evens");
+  }
 
-    for (const item of sortArr) {
-      console.log(item);
-    }
-  
+  // 第 12 題
+  const nameString = sortArr.map((item) => item.name).join(",");
+  log(`12 ${nameString}`);
+
+  // 第 13 題
+  for (const item of sortArr) {
+    console.log(13, item);
+  }
 }
 
 const homeWorkModel = new HomeWorkModel();

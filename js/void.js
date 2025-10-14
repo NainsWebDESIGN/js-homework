@@ -1,4 +1,13 @@
-const api = "php";
+const API = Object.freeze({
+  PHP: "PHP",
+  JSON: "JSON"
+});
+const RESPONSE = Object.freeze({
+  SUC: true,
+  FEI: false
+});
+
+const api = API.PHP;
 
 /**
  * 取得抓取 json 的路徑
@@ -6,15 +15,6 @@ const api = "php";
  */
 function basehref(url){
   return `./json/${url}.json`;
-}
-
-/**
- * 取得抓取 php 的路徑
- * @param url (string) 檔案名稱
- */
-function backhref(url){
-  // return `https://nainsjs.zeabur.app/php/${url}.php`;
-  return `./php/${url}.php`;
 }
 
 /**

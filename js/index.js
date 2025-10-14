@@ -2,10 +2,10 @@ const topicModel = new TopicModel();
 
 function GETtopic(){
   switch(api){
-    case "json": // 向 json 抓題目資料
+    case API.JSON: // 向 json 抓題目資料
       return topicModel
         .getTopic();
-    case "php": // 向 php 抓題目資料
+    case API.PHP: // 向 php 抓題目資料
       return topicModel
         .backTopic('topic');
   }

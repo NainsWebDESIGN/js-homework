@@ -45,18 +45,21 @@ class HomeWorkModel {
    */
   async backEnd(param){
     try {
-      await fetch(`${backhref("getDataBase")}?getWay=data${param}`)
+      console.log(456);
+      await fetch(`./php/system.php?getWay=data${param}`)
         .then((res) => res.json())
-        .then((res) => res.status ? res.data : res.errMsg)
-        .then((data) => {
-
-          switch (typeof data) {
-            case "string":
-              throw new Error(data);
+        .then((response) => {
+          switch (response.status) {
+            case RESPONSE.SUC:
+              this.data[`arr${param}`] = response.data;
               break;
-          
+
+            case RESPONSE.FEI:
+              throw new Error(data.errMsg);
+              break;
+
             default:
-              this.data[`arr${param}`] = data;
+              throw new Error(data)
               break;
           }
 
@@ -105,23 +108,25 @@ class TopicModel {
    */
   async backTopic(getWay){
     try {
-      const url = backhref("postDataBase");
-      await fetch(url, {
+      await fetch("./php/system.php", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: getWay })
     })
         .then((res) => res.json())
-        .then((res) => res.status ? res.data : res.errMsg)
-        .then((data) => {
+        .then((response) => {
 
-          switch (typeof data) {
-            case "string":
-              throw new Error(data);
+          switch (response.status) {
+            case RESPONSE.SUC:
+              this.topic = response.data;
               break;
-          
+
+            case RESPONSE.FEI:
+              throw new Error(data.errMsg);
+              break;
+
             default:
-              this.topic = data;
+              throw new Error(data)
               break;
           }
           

@@ -24,8 +24,9 @@ if (isset($_GET['getWay'])) {
                     )
                 )
             )));
+        exit;
     }elseif($param == 'data2'){
-        echo json_encode(array('errMsg' => 'not found param', 'status' => false, 'data' => array(
+        echo json_encode(array('errMsg' => '', 'status' => true, 'data' => array(
                 array('id' => 8, 'name' => '流蘇', 'age' => 14),
                 array('id' => 10, 'name' => '趙吉', 'age' => 11),
                 array('id' => 9, 'name' => '趙千歡', 'age' => 15),
@@ -37,12 +38,15 @@ if (isset($_GET['getWay'])) {
                     )
                 )
             )));
+        exit;
     }else{
         echo json_encode(array('errMsg' => 'not found param', 'status' => false, 'data' => array()));
+        exit;
     }
 
 
 }else{
     echo json_encode(array('errMsg' => 'Invalid message', 'status' => false, 'data' => array()));
+        exit;
 }
 ?>

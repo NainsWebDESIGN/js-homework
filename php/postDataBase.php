@@ -33,6 +33,7 @@ if ($request['message'] === "topic") {
             )
         )
     );
+    exit;
 } else {
     echo json_encode(
         array(
@@ -41,5 +42,6 @@ if ($request['message'] === "topic") {
             'data' => array()
         )
     );
+    exit;
 }
 ?>

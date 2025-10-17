@@ -9,40 +9,46 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, X-Requested-with, Origin, Authorization');
 header('Access-Control-Expose-Headers:X-My-Custom-Header');
 
+$token = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : null;
+$param = $_GET['gateWay'];
+include "database.php";
+$responseStatus;
+$responseMessage;
+
 switch ($method) {
     case 'GET':
-        $param = $_GET['getWay'];
-        
-        if($param == 'data1'){
-            require "data1.php";
-            echo json_encode(array('errMsg' => '', 'status' => true, 'data' => $data));
-            exit;
-        }elseif($param == 'data2'){
-            require "data2.php";
-            echo json_encode(array('errMsg' => '', 'status' => true, 'data' => $data));
-            exit;
-        }else{
-            echo json_encode(array('errMsg' => 'not found param', 'status' => false, 'data' => array()));
-            exit;
-        }
+        $staff = new DataBase($param);
+        $responseStatus = $staff->status;
+        $responseMessage = array(
+            'errMsg' => ($responseStatus !== 200) ? 'gateWay or body is undefinded' : '',
+            'status' => ($responseStatus !== 200) ? false : true, 
+            'data' => $staff->data
+        );
         break;
         
     case 'POST':
         $request = json_decode(file_get_contents("php://input"), true);
-
-        if($request['message'] === "topic"){
-            require "topic.php";
-            echo json_encode(array('errMsg' => '', 'status' => true, 'data' => $data));
-            exit;
-        }else{
-            echo json_encode(array('errMsg' => 'Invalid message', 'status' => false, 'data' => array()));
-            exit;
+        if($param == "signup"){
+            include "Base64Url.php";
+            $user = new DataBase("user");
+            $check = new Jwt($request['message'], $token, $user->data);
+            $responseStatus = ($check->verify) ? 200 : 404;
+            $responseMessage = array(
+                'errMsg' => ($responseStatus !== 200) ? '' : 'This account is already in use',
+                'status' => ($responseStatus !== 200) ? false : true,
+                'data' => ($responseStatus !== 200) ? 'OK' : '',
+                'base64' => $check->test
+            );
         }
         break;
 
     default:
-        echo json_encode(array('errMsg' => 'Invalid message', 'status' => false, 'data' => array()));
-        exit;
+        $responseStatus = 404;
+        $responseMessage = array('errMsg' => 'Methods Error', 'status' => false, 'data' => array(), 'token' => $token);
         break;
 }
+
+http_response_code($responseStatus);
+echo json_encode($responseMessage);
+exit;
 ?>

@@ -1,19 +1,24 @@
 const API = Object.freeze({
   PHP: "PHP",
-  JSON: "JSON"
+  JSON: "JSON",
 });
 const RESPONSE = Object.freeze({
   SUC: true,
-  FEI: false
+  FEI: false,
 });
 
 const api = API.PHP;
+const secret = "nains-123456789-shizuna-987654321-secret";
+const jwtHeader = {
+  alg: "HS256",
+  typ: "JWT",
+};
 
 /**
  * 取得抓取 json 的路徑
  * @param url (string) 檔案名稱
  */
-function basehref(url){
+function basehref(url) {
   return `./json/${url}.json`;
 }
 

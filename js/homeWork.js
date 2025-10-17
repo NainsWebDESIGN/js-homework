@@ -1,11 +1,9 @@
-function homeWorkFormat(data){
-  // 請將答案寫在這邊
-}
+function homeWorkFormat(data) {}
 
 const homeWorkModel = new HomeWorkModel();
 
-function GEThomeWork(){
-  switch(api){
+function GEThomeWork() {
+  switch (api) {
     case API.JSON: // 向 json 抓作業資料
       return homeWorkModel
         .ajax(1)
@@ -13,8 +11,8 @@ function GEThomeWork(){
         .then((model) => model.getData());
     case API.PHP: // 向 php 抓作業資料
       return homeWorkModel
-        .backEnd(1)
-        .then((model) => model.backEnd(2))
+        .backEnd("first")
+        .then((model) => model.backEnd("second"))
         .then((model) => model.getData());
   }
 }

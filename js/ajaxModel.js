@@ -1,5 +1,4 @@
 class HomeWorkModel {
-
   /**
    * 存儲資料
    */
@@ -8,16 +7,16 @@ class HomeWorkModel {
   /**
    * 取得作業的倉庫資訊
    */
-  getData(){
-    try{
+  getData() {
+    try {
       return new Promise((res, rej) => {
-        if(!this.data || this.data.length == 0){
+        if (!this.data || this.data.length == 0) {
           rej(new Error("data is null"));
-        }else{
+        } else {
           res(this.data);
         }
       });
-    }catch(e){
+    } catch (e) {
       throw new Error(e.message);
     }
   }
@@ -33,7 +32,6 @@ class HomeWorkModel {
         .then((res) => (this.data[`arr${param}`] = res));
 
       return this;
-
     } catch (e) {
       throw new Error(e.message);
     }
@@ -43,9 +41,9 @@ class HomeWorkModel {
    * 向 php 抓取資料
    * @param param (number) 第幾個資料
    */
-  async backEnd(param){
+  async backEnd(param) {
     try {
-      await fetch(`./php/system.php?getWay=data${param}`)
+      await fetch(`./php/system.php?gateWay=${param}Group`)
         .then((res) => res.json())
         .then((response) => {
           switch (response.status) {
@@ -55,26 +53,20 @@ class HomeWorkModel {
 
             case RESPONSE.FEI:
               throw new Error(data.errMsg);
-              break;
 
             default:
-              throw new Error(data)
-              break;
+              throw new Error(data);
           }
-
         });
 
       return this;
-
     } catch (e) {
       throw new Error(e.message);
     }
   }
-
 }
 
 class TopicModel {
-
   /**
    * 存儲資料
    */
@@ -87,12 +79,12 @@ class TopicModel {
     try {
       await fetch(basehref("topic"))
         .then((res) => res.json())
-        .then((res) => this.topic = res);
+        .then((res) => (this.topic = res));
 
       return new Promise((res, rej) => {
-        if(!this.topic || this.topic.length == 0){
+        if (!this.topic || this.topic.length == 0) {
           rej(new Error("topic is null"));
-        }else{
+        } else {
           res(this.topic);
         }
       });
@@ -100,21 +92,15 @@ class TopicModel {
       throw new Error(e.message);
     }
   }
-
   /**
    * 向 php 抓取題目
    * @param getWay (string) 題目識別
    */
-  async backTopic(getWay){
+  async backTopic(getWay) {
     try {
-      await fetch("./php/system.php", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: getWay })
-    })
+      await fetch(`./php/system.php?gateWay=${getWay}`)
         .then((res) => res.json())
         .then((response) => {
-
           switch (response.status) {
             case RESPONSE.SUC:
               this.topic = response.data;
@@ -122,20 +108,61 @@ class TopicModel {
 
             case RESPONSE.FEI:
               throw new Error(data.errMsg);
-              break;
 
             default:
-              throw new Error(data)
-              break;
+              throw new Error(data);
           }
-          
         });
 
       return new Promise((res, rej) => {
-        if(!this.topic || this.topic.length == 0){
+        if (!this.topic || this.topic.length == 0) {
           rej(new Error("topic is null"));
-        }else{
+        } else {
           res(this.topic);
+        }
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
+}
+
+class UserModel {
+  signupStatus = false;
+  /**
+   * 註冊帳號密碼
+   * @param payload (object) username，password
+   */
+  async signup(payload) {
+    try {
+      const encode = await new EnCodeJwt(payload).token;
+      await fetch("./php/system.php?gateWay=signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: encode,
+        },
+        body: JSON.stringify({ message: "signup" }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          switch (response.status) {
+            case RESPONSE.SUC:
+              this.signupStatus = response.data;
+              break;
+
+            case RESPONSE.FEI:
+              throw new Error(data.errMsg);
+
+            default:
+              throw new Error(data);
+          }
+        });
+      return new Promise((res, rej) => {
+        if (!this.signupStatus) {
+          rej(new Error("Signup is feiled"));
+        } else {
+          res(this.signupStatus);
         }
       });
     } catch (e) {

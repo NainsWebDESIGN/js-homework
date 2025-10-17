@@ -1,4 +1,4 @@
-function homeWorkFormat(data){
+function homeWorkFormat(data) {
   // 第 1 題
   const key$ = Object.keys(data);
   console.log(1, key$);
@@ -6,11 +6,9 @@ function homeWorkFormat(data){
   // 第 2 題
   const value$ = Object.values(data);
   console.log(2, value$);
-  
+
   // 第 3 題
-  const flatArr = value$.map((item) =>
-    item.flat(Infinity)
-  );
+  const flatArr = value$.map((item) => item.flat(Infinity));
   console.log(3, flatArr);
 
   // 第 4 題
@@ -85,8 +83,8 @@ function homeWorkFormat(data){
 
 const homeWorkModel = new HomeWorkModel();
 
-function GEThomeWork(){
-  switch(api){
+function GEThomeWork() {
+  switch (api) {
     case API.JSON: // 向 json 抓作業資料
       return homeWorkModel
         .ajax(1)
@@ -94,8 +92,8 @@ function GEThomeWork(){
         .then((model) => model.getData());
     case API.PHP: // 向 php 抓作業資料
       return homeWorkModel
-        .backEnd(1)
-        .then((model) => model.backEnd(2))
+        .backEnd("first")
+        .then((model) => model.backEnd("second"))
         .then((model) => model.getData());
   }
 }

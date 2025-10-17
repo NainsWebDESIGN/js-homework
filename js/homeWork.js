@@ -1,4 +1,6 @@
-function homeWorkFormat(data) {}
+function homeWorkFormat(data) {
+  // 請將答案寫在這邊
+}
 
 const homeWorkModel = new HomeWorkModel();
 

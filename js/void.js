@@ -13,24 +13,13 @@ const JWT = Object.freeze({
     typ: "JWT",
   },
 });
+const PATH = Object.freeze({
+  FRONT: (url) => `./json/${url}.json`, // 取得抓取 json 的路徑
+  BACK: (url) => `./php/system.php?gateWay=${url}`, // 取得抓取 php 的路徑
+});
+
 const api = API.PHP;
 const user = { username: "Nains", password: "123456789" };
-
-/**
- * 取得抓取 json 的路徑
- * @param url (string) 檔案名稱
- */
-function basehref(url) {
-  return `./json/${url}.json`;
-}
-
-/**
- * 取得抓取 php 的路徑
- * @param url (string) 檔案名稱
- */
-function backhref(url) {
-  return `./php/system.php?gateWay=${url}`;
-}
 
 /**
  * 打印出有樣式的資料

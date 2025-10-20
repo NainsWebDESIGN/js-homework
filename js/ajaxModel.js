@@ -28,10 +28,10 @@ class HomeWorkModel {
    */
   async backEnd() {
     try {
-      const urls = ["first", "second"];
+      const urls = ["firstGroup", "secondGroup"];
       return Promise.all(
         urls.map((url) =>
-          fetch(`./php/system.php?gateWay=${url}Group`)
+          fetch(backhref(url))
             .then((res) => res.json())
             .then((res) => {
               switch (res.status) {
@@ -77,7 +77,7 @@ class TopicModel {
    */
   async backTopic() {
     try {
-      return await fetch(`./php/system.php?gateWay=topic`)
+      return await fetch(backhref("topic"))
         .then((res) => res.json())
         .then((res) => {
           switch (res.status) {

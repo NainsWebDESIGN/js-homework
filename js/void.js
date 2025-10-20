@@ -23,6 +23,14 @@ function basehref(url) {
 }
 
 /**
+ * 取得抓取 php 的路徑
+ * @param url (string) 檔案名稱
+ */
+function backhref(url) {
+  return `./php/system.php?gateWay=${url}`;
+}
+
+/**
  * 打印出有樣式的資料
  * @param t (string) 要打印的文字(預設為正常打印)
  * @param a (string) l = 正常，s = 成功，e = 錯誤，w = 警告

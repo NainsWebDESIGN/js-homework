@@ -23,7 +23,7 @@ class HomeWorkModel {
       let urls = [1, 2];
       const allData = await Promise.all(
         urls.map((url) =>
-          fetch(basehref(`homeWork${url}`)).then((res) => res.json())
+          fetch(PATH.FRONT(`homeWork${url}`)).then((res) => res.json())
         )
       );
 
@@ -49,7 +49,7 @@ class HomeWorkModel {
 
       return Promise.all(
         urls.map((url) =>
-          fetch(backhref(url), {
+          fetch(PATH.BACK(url), {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -99,7 +99,7 @@ class TopicModel {
    */
   async getTopic() {
     try {
-      const topic = await fetch(basehref("topic")).then((res) => res.json());
+      const topic = await fetch(PATH.FRONT("topic")).then((res) => res.json());
 
       return new Promise((res, rej) => {
         if (!topic || topic.length == 0) {
@@ -119,7 +119,7 @@ class TopicModel {
     try {
       const encode = new Jwt(payload).token;
 
-      return await fetch(backhref("topic"), {
+      return await fetch(PATH.BACK("topic"), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +193,7 @@ class UserModel {
   async signup(payload) {
     try {
       const encode = new Jwt(payload).token;
-      return await fetch(backhref("signup"), {
+      return await fetch(PATH.BACK("signup"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

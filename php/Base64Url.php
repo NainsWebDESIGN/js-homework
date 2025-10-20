@@ -2,7 +2,6 @@
 class Jwt {
     public $secret = "nains-123456789-shizuna-987654321-secret";
     public $verify = false;
-    public $test;
 
     public function __construct($gateway, $jwt, $user = array()){
         switch($gateway){
@@ -63,7 +62,6 @@ class Jwt {
         $decode = $this->jwtDecode($jwt);
 
         if(!isset($decode['username'])){
-            $this->test = $decode;
             return $this->verify = false;
         }
 
@@ -73,10 +71,8 @@ class Jwt {
         }, $user));
 
         if($checkUser){
-            $this->test = "已有帳號";
             $this->verify = false;
         }else{
-            $this->test = "OK";
             $this->verify = true;
         }
     }

@@ -26,12 +26,20 @@ class HomeWorkModel {
   /**
    * 向 php 抓取資料
    */
-  async backEnd() {
+  async backEnd(payload) {
     try {
       const urls = ["firstGroup", "secondGroup"];
+      const encode = new Jwt(payload).token;
+
       return Promise.all(
         urls.map((url) =>
-          fetch(backhref(url))
+          fetch(backhref(url), {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: encode,
+            },
+          })
             .then((res) => res.json())
             .then((res) => {
               switch (res.status) {
@@ -75,9 +83,17 @@ class TopicModel {
   /**
    * 向 php 抓取題目
    */
-  async backTopic() {
+  async backTopic(payload) {
     try {
-      return await fetch(backhref("topic"))
+      const encode = new Jwt(payload).token;
+
+      return await fetch(backhref("topic"), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: encode,
+        },
+      })
         .then((res) => res.json())
         .then((res) => {
           switch (res.status) {
@@ -97,16 +113,55 @@ class TopicModel {
   }
 }
 
+class UidStatus {
+  uuid;
+  constructor() {
+    this._uuid();
+  }
+  _uuid() {
+    this.uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+}
+
+class Jwt {
+  token;
+
+  constructor(payload) {
+    const before_sign =
+      this.parseUtf8(JWT.HEADER) + "." + this.parseUtf8(payload);
+    const signature = CryptoJS.HmacSHA256(before_sign, JWT.SECRET);
+
+    this.token = `${before_sign}.${this.enCode(signature)}`;
+  }
+
+  parseUtf8(item) {
+    return this.enCode(CryptoJS.enc.Utf8.parse(JSON.stringify(item)));
+  }
+
+  enCode(str) {
+    const encodeSource = CryptoJS.enc.Base64.stringify(str);
+    const reg = new RegExp("/", "g");
+
+    return encodeSource
+      .replace(/=+$/, "")
+      .replace(/\+/g, "-")
+      .replace(reg, "_");
+  }
+}
+
 class UserModel {
-  signupStatus = false;
   /**
    * 註冊帳號密碼
    * @param payload (object) username，password
    */
   async signup(payload) {
     try {
-      const encode = await new EnCodeJwt(payload).token;
-      await fetch("./php/system.php?gateWay=signup", {
+      const encode = new Jwt(payload).token;
+      return await fetch(backhref("signup"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,23 +173,15 @@ class UserModel {
         .then((response) => {
           switch (response.status) {
             case RESPONSE.SUC:
-              this.signupStatus = response.data;
-              break;
+              return response.data;
 
             case RESPONSE.FEI:
-              throw new Error(data.errMsg);
+              throw new Error(response.errMsg);
 
             default:
-              throw new Error(data);
+              throw new Error(response);
           }
         });
-      return new Promise((res, rej) => {
-        if (!this.signupStatus) {
-          rej(new Error("Signup is feiled"));
-        } else {
-          res(this.signupStatus);
-        }
-      });
     } catch (e) {
       throw new Error(e.message);
     }

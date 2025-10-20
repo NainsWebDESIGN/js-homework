@@ -8,11 +8,7 @@ function topicFormate(data) {
   });
 }
 
-const user = { username: "Nains", password: "123456789" };
-const check = api == API.JSON;
-
-new TopicModel()
-  [check ? "getTopic" : "backTopic"](check ? null : user)
+new TopicModel().data
   .then(topicFormate)
   .catch((err) => log(err, "w"))
   .finally(() => log("Topic Completed!", "s"));

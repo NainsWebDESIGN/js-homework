@@ -6,13 +6,14 @@ const RESPONSE = Object.freeze({
   SUC: true,
   FEI: false,
 });
-
+const JWT = Object.freeze({
+  SECRET: "nains-123456789-shizuna-987654321-secret",
+  HEADER: {
+    alg: "HS256",
+    typ: "JWT",
+  },
+});
 const api = API.PHP;
-const secret = "nains-123456789-shizuna-987654321-secret";
-const jwtHeader = {
-  alg: "HS256",
-  typ: "JWT",
-};
 
 /**
  * 取得抓取 json 的路徑
@@ -20,6 +21,14 @@ const jwtHeader = {
  */
 function basehref(url) {
   return `./json/${url}.json`;
+}
+
+/**
+ * 取得抓取 php 的路徑
+ * @param url (string) 檔案名稱
+ */
+function backhref(url) {
+  return `./php/system.php?gateWay=${url}`;
 }
 
 /**

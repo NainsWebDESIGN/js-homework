@@ -39,6 +39,20 @@ function homeWorkFormat(data) {
   }));
   console.log(8, mapArr);
   // 第 9 題
+  // const sortArrformate = [
+  //   "趙吉",
+  //   "江曉翠",
+  //   "流蘇",
+  //   "夏紅梅",
+  //   "劉大友",
+  //   "翁陸源",
+  //   "陸起杉",
+  //   "趙千歡",
+  // ];
+  // const sortArr = mapArr.sort(
+  //   (a, b) => sortArrformate.indexOf(a.name) - sortArrformate.indexOf(b.name)
+  // );
+  // console.log(9, sortArr);
   const sortArr = mapArr.sort((a, b) => a.id - b.id);
   console.log(9, sortArr);
   // 第 10 題
@@ -69,11 +83,7 @@ function homeWorkFormat(data) {
   }
 }
 
-const user = { username: "Nains", password: "123456789" };
-const check = api == API.JSON;
-
-new HomeWorkModel()
-  [check ? "jsonEnd" : "backEnd"](check ? null : user)
+new HomeWorkModel().data
   .then(homeWorkFormat)
   .catch((err) => log(err, "w"))
   .finally(() => log("Home Work Completed!", "s"));

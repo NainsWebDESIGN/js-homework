@@ -14,6 +14,7 @@ const JWT = Object.freeze({
   },
 });
 const api = API.PHP;
+const user = { username: "Nains", password: "123456789" };
 
 /**
  * 取得抓取 json 的路徑

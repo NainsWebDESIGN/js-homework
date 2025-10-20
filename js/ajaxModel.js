@@ -1,5 +1,21 @@
 class HomeWorkModel {
   /**
+   * 存儲資料
+   */
+  data;
+
+  constructor() {
+    switch (api) {
+      case API.JSON:
+        this.data = this.jsonEnd();
+        break;
+      case API.PHP:
+        this.data = this.backEnd();
+        break;
+    }
+  }
+
+  /**
    * 向 json 抓取資料
    */
   async jsonEnd() {
@@ -62,6 +78,22 @@ class HomeWorkModel {
 }
 
 class TopicModel {
+  /**
+   * 存儲資料
+   */
+  data;
+
+  constructor() {
+    switch (api) {
+      case API.JSON:
+        this.data = this.getTopic();
+        break;
+      case API.PHP:
+        this.data = this.backTopic();
+        break;
+    }
+  }
+
   /**
    * 向 json 抓取題目
    */

@@ -1,19 +1,21 @@
 class HomeWorkModel {
   /**
-   * 存儲資料
+   * 向 json 抓取資料
    */
-  data = {};
-
-  /**
-   * 取得作業的倉庫資訊
-   */
-  getData() {
+  async jsonEnd() {
     try {
+      let urls = [1, 2];
+      const allData = await Promise.all(
+        urls.map((url) =>
+          fetch(basehref(`homeWork${url}`)).then((res) => res.json())
+        )
+      );
+
       return new Promise((res, rej) => {
-        if (!this.data || this.data.length == 0) {
-          rej(new Error("data is null"));
+        if (!allData) {
+          rej(new Error("data is undefinded"));
         } else {
-          res(this.data);
+          res({ arr1: allData[0], arr2: allData[1] });
         }
       });
     } catch (e) {
@@ -22,44 +24,29 @@ class HomeWorkModel {
   }
 
   /**
-   * 向 json 抓取資料
-   * @param param (number) 第幾個資料
-   */
-  async ajax(param) {
-    try {
-      await fetch(basehref(`homeWork${param}`))
-        .then((res) => res.json())
-        .then((res) => (this.data[`arr${param}`] = res));
-
-      return this;
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  }
-
-  /**
    * 向 php 抓取資料
-   * @param param (number) 第幾個資料
    */
-  async backEnd(param) {
+  async backEnd() {
     try {
-      await fetch(`./php/system.php?gateWay=${param}Group`)
-        .then((res) => res.json())
-        .then((response) => {
-          switch (response.status) {
-            case RESPONSE.SUC:
-              this.data[`arr${param}`] = response.data;
-              break;
+      const urls = ["first", "second"];
+      return Promise.all(
+        urls.map((url) =>
+          fetch(`./php/system.php?gateWay=${url}Group`)
+            .then((res) => res.json())
+            .then((res) => {
+              switch (res.status) {
+                case RESPONSE.SUC:
+                  return res.data;
 
-            case RESPONSE.FEI:
-              throw new Error(data.errMsg);
+                case RESPONSE.FEI:
+                  throw new Error(res.errMsg);
 
-            default:
-              throw new Error(data);
-          }
-        });
-
-      return this;
+                default:
+                  throw new Error(res);
+              }
+            })
+        )
+      ).then((data) => ({ arr1: data[0], arr2: data[1] }));
     } catch (e) {
       throw new Error(e.message);
     }
@@ -68,24 +55,17 @@ class HomeWorkModel {
 
 class TopicModel {
   /**
-   * 存儲資料
-   */
-  topic = [];
-
-  /**
    * 向 json 抓取題目
    */
   async getTopic() {
     try {
-      await fetch(basehref("topic"))
-        .then((res) => res.json())
-        .then((res) => (this.topic = res));
+      const topic = await fetch(basehref("topic")).then((res) => res.json());
 
       return new Promise((res, rej) => {
-        if (!this.topic || this.topic.length == 0) {
+        if (!topic || topic.length == 0) {
           rej(new Error("topic is null"));
         } else {
-          res(this.topic);
+          res(topic);
         }
       });
     } catch (e) {
@@ -94,33 +74,23 @@ class TopicModel {
   }
   /**
    * 向 php 抓取題目
-   * @param getWay (string) 題目識別
    */
-  async backTopic(getWay) {
+  async backTopic() {
     try {
-      await fetch(`./php/system.php?gateWay=${getWay}`)
+      return await fetch(`./php/system.php?gateWay=topic`)
         .then((res) => res.json())
-        .then((response) => {
-          switch (response.status) {
+        .then((res) => {
+          switch (res.status) {
             case RESPONSE.SUC:
-              this.topic = response.data;
-              break;
+              return res.data;
 
             case RESPONSE.FEI:
-              throw new Error(data.errMsg);
+              throw new Error(res.errMsg);
 
             default:
-              throw new Error(data);
+              throw new Error(res);
           }
         });
-
-      return new Promise((res, rej) => {
-        if (!this.topic || this.topic.length == 0) {
-          rej(new Error("topic is null"));
-        } else {
-          res(this.topic);
-        }
-      });
     } catch (e) {
       throw new Error(e.message);
     }

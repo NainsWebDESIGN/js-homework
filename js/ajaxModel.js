@@ -42,20 +42,14 @@ class HomeWorkModel {
   /**
    * 向 php 抓取資料
    */
-  async backEnd(payload) {
+  async backEnd() {
     try {
       const urls = ["firstGroup", "secondGroup"];
-      const encode = new Jwt(payload).token;
 
       return Promise.all(
         urls.map((url) =>
           axios
-            .get(PATH.BACK(url), {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: API_TOKEN,
-              },
-            })
+            .get(PATH.CLIENT(url))
             .then((res) => res.data)
             .then((res) => {
               switch (res.status) {
@@ -117,17 +111,10 @@ class TopicModel {
   /**
    * 向 php 抓取題目
    */
-  async backTopic(payload) {
+  async backTopic() {
     try {
-      const encode = new Jwt(payload).token;
-
       return await axios
-        .get(PATH.BACK("topic"), {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: API_TOKEN,
-          },
-        })
+        .get(PATH.CLIENT("topic"))
         .then((res) => res.data)
         .then((res) => {
           switch (res.status) {
@@ -197,12 +184,12 @@ class UserModel {
       const encode = new Jwt(payload).token;
       return await axios
         .post(
-          PATH.BACK("signup"),
+          PATH.CLIENT("signup"),
           { message: "signup" },
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: API_TOKEN,
+              Authorization: `Bearer ${API_TOKEN}`,
             },
           }
         )

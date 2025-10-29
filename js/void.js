@@ -19,7 +19,7 @@ const PATH = Object.freeze({
   CLIENT: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 php 的路徑
 });
 
-const API_TOKEN = `Bearer sk-jezxyxqgwb5y6wxsybl2zyo7s6npd`;
+const API_TOKEN = "sk-jezxyxqgwb5y6wxsybl2zyo7s6npd";
 const api = API.PHP;
 const user = { username: "Nains", password: "123456789" };
 

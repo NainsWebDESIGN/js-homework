@@ -1,6 +1,6 @@
 <?php
-include "./php/header.php";
-include "./php/database.php";
+include "/header.php";
+include "/database.php";
 
 switch ($method) {
     case 'GET':
@@ -17,7 +17,7 @@ switch ($method) {
         $request = json_decode(file_get_contents("php://input"), true);
         
         if($param == "signup"){
-            include "./php/Base64Url.php";
+            include "/Base64Url.php";
             $user = new DataBase("user");
             $check = new Jwt($request['message'], $token, $user->data);
             $responseStatus = ($check->verify) ? 200 : 404;

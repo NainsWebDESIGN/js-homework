@@ -1,3 +1,5 @@
+const apiModel = new ApiModel();
+apiModel.Api = API.PHP;
 class HomeWorkModel {
   /**
    * 存儲資料
@@ -5,7 +7,7 @@ class HomeWorkModel {
   data;
 
   constructor() {
-    switch (api) {
+    switch (apiModel.Api) {
       case API.JSON:
         this.data = this.jsonEnd();
         break;
@@ -78,7 +80,7 @@ class TopicModel {
   data;
 
   constructor() {
-    switch (api) {
+    switch (apiModel.Api) {
       case API.JSON:
         this.data = this.getTopic();
         break;
@@ -189,7 +191,7 @@ class UserModel {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${API_TOKEN}`,
+              Authorization: `Bearer ${apiModel.API_TOKEN}`,
             },
           }
         )

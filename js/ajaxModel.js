@@ -138,27 +138,33 @@ class TopicModel {
 
 class UidStatus {
   uuid;
+
   constructor() {
-    this._uuid();
-  }
-  _uuid() {
-    this.uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    this.uid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
       var r = (Math.random() * 16) | 0,
         v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
+
+  set uid(uid) {
+    this.uuid = uid;
+  }
+
+  get uid() {
+    return this.uuid;
+  }
 }
 
 class Jwt {
-  token;
+  _token;
 
   constructor(payload) {
     const before_sign =
       this.parseUtf8(JWT.HEADER) + "." + this.parseUtf8(payload);
     const signature = CryptoJS.HmacSHA256(before_sign, JWT.SECRET);
 
-    this.token = `${before_sign}.${this.enCode(signature)}`;
+    this._token = `${before_sign}.${this.enCode(signature)}`;
   }
 
   parseUtf8(item) {
@@ -173,6 +179,14 @@ class Jwt {
       .replace(/=+$/, "")
       .replace(/\+/g, "-")
       .replace(reg, "_");
+  }
+
+  set token(jwt) {
+    this._token = jwt;
+  }
+
+  get token() {
+    return this._token;
   }
 }
 

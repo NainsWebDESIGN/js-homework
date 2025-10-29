@@ -1,25 +1,28 @@
-const API = Object.freeze({
-  PHP: "PHP",
-  JSON: "JSON",
-});
-const RESPONSE = Object.freeze({
-  SUC: true,
-  FEI: false,
-});
-const JWT = Object.freeze({
-  SECRET: "nains-123456789-shizuna-987654321-secret",
-  HEADER: {
-    alg: "HS256",
-    typ: "JWT",
-  },
-});
-const PATH = Object.freeze({
-  FRONT: (url) => `./json/${url}.json`, // 取得抓取 json 的路徑
-  BACK: (url) => `./php/index.php?gateWay=${url}`, // 取得抓取 php 的路徑
-  HTTP: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 php 的路徑
+const ENV = Object.freeze({
+  API: Object.freeze({
+    PHP: "PHP",
+    JSON: "JSON",
+  }),
+  RESPONSE: Object.freeze({
+    SUC: true,
+    FEI: false,
+  }),
+  JWT: Object.freeze({
+    SECRET: "nains-123456789-shizuna-987654321-secret",
+    HEADER: {
+      alg: "HS256",
+      typ: "JWT",
+    },
+  }),
+  PATH: Object.freeze({
+    FRONT: (url) => `./json/${url}.json`, // 取得抓取 json 的路徑
+    BACK: (url) => `./php/index.php?gateWay=${url}`, // 取得抓取 php 的路徑
+    HTTP: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 php 的路徑
+  }),
+  API_TOKEN: `Bearer sk-jezxyxqgwb5y6wxsybl2zyo7s6npd`,
 });
 
-const api = API.PHP;
+const api = ENV.API.PHP;
 const user = { username: "Nains", password: "123456789" };
 
 /**

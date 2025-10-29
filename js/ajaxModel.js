@@ -6,10 +6,10 @@ class HomeWorkModel {
 
   constructor() {
     switch (api) {
-      case API.JSON:
+      case ENV.API.JSON:
         this.data = this.jsonEnd();
         break;
-      case API.PHP:
+      case ENV.API.PHP:
         this.data = this.backEnd();
         break;
     }
@@ -23,7 +23,7 @@ class HomeWorkModel {
       let urls = [1, 2];
       const allData = await Promise.all(
         urls.map((url) =>
-          axios.get(PATH.FRONT(`homeWork${url}`)).then((res) => res.data)
+          axios.get(ENV.PATH.FRONT(`homeWork${url}`)).then((res) => res.data)
         )
       );
 
@@ -50,19 +50,19 @@ class HomeWorkModel {
       return Promise.all(
         urls.map((url) =>
           axios
-            .get(PATH.BACK(url), {
+            .get(ENV.PATH.BACK(url), {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: encode,
+                Authorization: ENV.API_TOKEN,
               },
             })
             .then((res) => res.data)
             .then((res) => {
               switch (res.status) {
-                case RESPONSE.SUC:
+                case ENV.RESPONSE.SUC:
                   return res.data;
 
-                case RESPONSE.FEI:
+                case ENV.RESPONSE.FEI:
                   throw new Error(res.errMsg);
 
                 default:
@@ -85,10 +85,10 @@ class TopicModel {
 
   constructor() {
     switch (api) {
-      case API.JSON:
+      case ENV.API.JSON:
         this.data = this.getTopic();
         break;
-      case API.PHP:
+      case ENV.API.PHP:
         this.data = this.backTopic();
         break;
     }
@@ -100,7 +100,7 @@ class TopicModel {
   async getTopic() {
     try {
       const topic = await axios
-        .get(PATH.FRONT("topic"))
+        .get(ENV.PATH.FRONT("topic"))
         .then((res) => res.data);
 
       return new Promise((res, rej) => {
@@ -122,19 +122,19 @@ class TopicModel {
       const encode = new Jwt(payload).token;
 
       return await axios
-        .get(PATH.HTTP("topic"), {
+        .get(ENV.PATH.HTTP("topic"), {
           headers: {
             "Content-Type": "application/json",
-            Authorization: encode,
+            Authorization: ENV.API_TOKEN,
           },
         })
         .then((res) => res.data)
         .then((res) => {
           switch (res.status) {
-            case RESPONSE.SUC:
+            case ENV.RESPONSE.SUC:
               return res.data;
 
-            case RESPONSE.FEI:
+            case ENV.RESPONSE.FEI:
               throw new Error(res.errMsg);
 
             default:
@@ -166,8 +166,8 @@ class Jwt {
 
   constructor(payload) {
     const before_sign =
-      this.parseUtf8(JWT.HEADER) + "." + this.parseUtf8(payload);
-    const signature = CryptoJS.HmacSHA256(before_sign, JWT.SECRET);
+      this.parseUtf8(ENV.JWT.HEADER) + "." + this.parseUtf8(payload);
+    const signature = CryptoJS.HmacSHA256(before_sign, ENV.JWT.SECRET);
 
     this.token = `${before_sign}.${this.enCode(signature)}`;
   }
@@ -197,22 +197,22 @@ class UserModel {
       const encode = new Jwt(payload).token;
       return await axios
         .post(
-          PATH.BACK("signup"),
+          ENV.PATH.BACK("signup"),
           { message: "signup" },
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: encode,
+              Authorization: ENV.API_TOKEN,
             },
           }
         )
         .then((res) => res.data)
         .then((response) => {
           switch (response.status) {
-            case RESPONSE.SUC:
+            case ENV.RESPONSE.SUC:
               return response.data;
 
-            case RESPONSE.FEI:
+            case ENV.RESPONSE.FEI:
               throw new Error(response.errMsg);
 
             default:

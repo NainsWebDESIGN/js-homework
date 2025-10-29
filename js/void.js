@@ -18,10 +18,21 @@ const PATH = Object.freeze({
   BACK: (url) => `./index.php?gateWay=${url}`, // 取得抓取 php 的路徑
   CLIENT: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 php 的路徑
 });
+const user = Object.freeze({
+  username: "Nains",
+  password: "123456789",
+});
 
-const API_TOKEN = "sk-jezxyxqgwb5y6wxsybl2zyo7s6npd";
-const api = API.PHP;
-const user = { username: "Nains", password: "123456789" };
+class ApiModel {
+  API_TOKEN = "sk-jezxyxqgwb5y6wxsybl2zyo7s6npd";
+  _Api;
+  set Api(method) {
+    this._Api = method;
+  }
+  get Api() {
+    return this._Api;
+  }
+}
 
 /**
  * 打印出有樣式的資料

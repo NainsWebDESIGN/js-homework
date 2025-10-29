@@ -16,9 +16,9 @@ const JWT = Object.freeze({
 const PATH = Object.freeze({
   FRONT: (url) => `./json/${url}.json`, // 取得抓取 json 的路徑
   BACK: (url) => `./index.php?gateWay=${url}`, // 取得抓取 php 的路徑
-  CLIENT: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 php 的路徑
+  CLIENT: (url) => `https://nainsjs.zeabur.app?gateWay=${url}`, // 取得抓取 API 的路徑
 });
-const user = Object.freeze({
+const USER = Object.freeze({
   username: "Nains",
   password: "123456789",
 });

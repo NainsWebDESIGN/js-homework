@@ -15,7 +15,7 @@ const JWT = Object.freeze({
 });
 const PATH = Object.freeze({
   FRONT: (url) => `./json/${url}.json`, // 取得抓取 json 的路徑
-  BACK: (url) => `./php/system.php?gateWay=${url}`, // 取得抓取 php 的路徑
+  BACK: (url) => `./php/index.php?gateWay=${url}`, // 取得抓取 php 的路徑
 });
 
 const api = API.PHP;

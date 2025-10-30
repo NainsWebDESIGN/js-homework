@@ -51,7 +51,7 @@ class HomeWorkModel {
       return Promise.all(
         urls.map((url) =>
           axios
-            .get(PATH.BACK(url))
+            .get(PATH.CLIENT(url))
             .then((res) => res.data)
             .then((res) => {
               switch (res.status) {
@@ -116,7 +116,7 @@ class TopicModel {
   async backTopic() {
     try {
       return await axios
-        .get(PATH.BACK("topic"))
+        .get(PATH.CLIENT("topic"))
         .then((res) => res.data)
         .then((res) => {
           switch (res.status) {
@@ -200,7 +200,7 @@ class UserModel {
       const encode = new Jwt(payload).token;
       return await axios
         .post(
-          PATH.BACK("signup"),
+          PATH.CLIENT("signup"),
           { message: "signup", payload: encode },
           {
             headers: {

@@ -12,7 +12,5 @@ header('Access-Control-Expose-Headers:X-My-Custom-Header');
 $token = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : null;
 $param = $_GET['gateWay'];
 
-$formateData;
-$responseStatus = null;
-$responseMessage = null;
+$formateData = null;
 ?>

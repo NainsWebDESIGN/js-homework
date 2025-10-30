@@ -1,5 +1,16 @@
 <?php
-class Jwt {
+class MemberModel {
+    public $data;
+    
+    public function __construct(){
+        $this->data = array(
+            array('username' => 'Nains', 'password' => '123456789'),
+            array('username' => 'Shizuna', 'password' => '987654321')
+        );
+    }
+}
+
+class JwtModel {
     public $secret = "nains-123456789-shizuna-987654321-secret";
     public $verify = false;
 

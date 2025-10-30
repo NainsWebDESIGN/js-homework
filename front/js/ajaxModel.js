@@ -51,7 +51,7 @@ class HomeWorkModel {
       return Promise.all(
         urls.map((url) =>
           axios
-            .get(PATH.CLIENT(url))
+            .get(PATH.BACK(url))
             .then((res) => res.data)
             .then((res) => {
               switch (res.status) {
@@ -116,7 +116,7 @@ class TopicModel {
   async backTopic() {
     try {
       return await axios
-        .get(PATH.CLIENT("topic"))
+        .get(PATH.BACK("topic"))
         .then((res) => res.data)
         .then((res) => {
           switch (res.status) {
@@ -200,8 +200,8 @@ class UserModel {
       const encode = new Jwt(payload).token;
       return await axios
         .post(
-          PATH.CLIENT("signup"),
-          { message: "signup" },
+          PATH.BACK("signup"),
+          { message: "signup", payload: encode },
           {
             headers: {
               "Content-Type": "application/json",
@@ -216,7 +216,7 @@ class UserModel {
               return response.data;
 
             case RESPONSE.FEI:
-              throw new Error(response.errMsg);
+              throw new Error(response.data);
 
             default:
               throw new Error(response);

@@ -66,7 +66,9 @@ class HomeWorkModel {
               }
             })
         )
-      ).then((data) => ({ arr1: data[0], arr2: data[1] }));
+      )
+        .then((data) => ({ arr1: data[0], arr2: data[1] }))
+        .catch((err) => log(err, e));
     } catch (e) {
       throw new Error(e.message);
     }
@@ -129,7 +131,8 @@ class TopicModel {
             default:
               throw new Error(res);
           }
-        });
+        })
+        .catch((err) => log(err, e));
     } catch (e) {
       throw new Error(e.message);
     }
@@ -221,7 +224,8 @@ class UserModel {
             default:
               throw new Error(response);
           }
-        });
+        })
+        .catch((err) => log(err, e));
     } catch (e) {
       throw new Error(e.message);
     }

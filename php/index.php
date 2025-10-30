@@ -1,6 +1,5 @@
 <?php
 include "./view/header.php";
-include "./view/function.php";
 
 switch ($method) {
     case 'GET':
@@ -35,10 +34,16 @@ switch ($method) {
         break;
 }
 
-$responseStatus = $formateData['status'];
-$responseMessage = finalData($responseStatus, $formateData['data']);
+$status = $formateData['status'];
+$data = $formateData['data'];
 
-http_response_code($responseStatus);
-echo json_encode($responseMessage);
+http_response_code($status);
+echo json_encode(
+    array(
+    'errMsg' => ($status == 200) ? '' : $data,
+    'status' => !(gettype($data) === "string"),
+    'data' => ($status == 200) ? $data : array()
+    )
+);
 exit;
 ?>
